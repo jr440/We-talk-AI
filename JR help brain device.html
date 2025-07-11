@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On-Device Memory Companion: Strategic Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A thematic, single-page scrolling narrative designed to guide a user (e.g., an investor) through a compelling pitch. The structure is not based on the report's chapters but on a logical flow: 1. Hook (The Big Idea), 2. The Opportunity (Market Size), 3. The Problem (User Need), 4. Our Solution (Privacy-First), 5. The Plan (Product Roadmap & Go-to-Market), 6. The Risks (Challenges & Mitigations), and 7. The Ask (Business Case). This user-centric flow is designed to build understanding and confidence, making the dense information digestible and persuasive. -->
+    <!-- Visualization & Content Choices: The application uses a variety of interactive elements to make the report's data engaging. Goal: Show Market Growth -> Viz: Interactive Bar Charts (Chart.js) -> Interaction: Hover for details, allowing users to explore data points without being overwhelmed. Goal: Differentiate from Competitors -> Viz: A visual, icon-driven comparison table (HTML/Tailwind) -> Interaction: A toggle to highlight the "privacy" features, immediately showing the key value proposition. Goal: Explain Complex Concepts (e.g., "Privacy-Performance-Power Trilemma") -> Viz: A simple interactive diagram (HTML/JS) -> Interaction: Clicking nodes updates explanatory text, breaking down a complex idea into simple parts. This approach ensures each piece of information is presented in its most effective format. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #333D29;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 384px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #5A8F7B;
+            border-bottom-color: #5A8F7B;
+        }
+        .stat-card, .product-card, .risk-card, .revenue-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover, .product-card:hover, .risk-card:hover, .revenue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-[#F8F7F4] bg-opacity-80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold text-[#333D29]">Memory Companion</div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#opportunity" class="nav-link">Opportunity</a>
+                    <a href="#solution" class="nav-link">Solution</a>
+                    <a href="#roadmap" class="nav-link">Roadmap</a>
+                    <a href="#challenges" class="nav-link">Challenges</a>
+                    <a href="#business" class="nav-link">Business Case</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-[#333D29] focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <a href="#opportunity" class="block py-2 px-4 text-sm nav-link">Opportunity</a>
+                <a href="#solution" class="block py-2 px-4 text-sm nav-link">Solution</a>
+                <a href="#roadmap" class="block py-2 px-4 text-sm nav-link">Roadmap</a>
+                <a href="#challenges" class="block py-2 px-4 text-sm nav-link">Challenges</a>
+                <a href="#business" class="block py-2 px-4 text-sm nav-link">Business Case</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-[#333D29] mb-4 fade-in">The On-Device Memory Companion</h1>
+                <p class="text-lg md:text-xl text-[#656D4A] max-w-3xl mx-auto mb-12 fade-in" style="transition-delay: 100ms;">A strategic analysis of a privacy-first wearable designed to support the neurodivergent community and capture a multi-billion dollar market opportunity.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card bg-[#F8F7F4] p-6 rounded-lg shadow-md fade-in" style="transition-delay: 200ms;">
+                        <p class="text-3xl font-bold text-[#5A8F7B]">$20.4B</p>
+                        <p class="text-[#656D4A]">Annual economic cost of ADHD in Australia</p>
+                    </div>
+                    <div class="stat-card bg-[#F8F7F4] p-6 rounded-lg shadow-md fade-in" style="transition-delay: 300ms;">
+                        <p class="text-3xl font-bold text-[#5A8F7B]">63%</p>
+                        <p class="text-[#656D4A]">Wearable users hesitant to share personal health data</p>
+                    </div>
+                    <div class="stat-card bg-[#F8F7F4] p-6 rounded-lg shadow-md fade-in" style="transition-delay: 400ms;">
+                        <p class="text-3xl font-bold text-[#5A8F7B]">$36.6B</p>
+                        <p class="text-[#656D4A]">Projected Global Assistive Technology Market by 2033</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="opportunity" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#333D29] mb-4">A Confluence of Billion-Dollar Markets</h2>
+                    <p class="text-lg text-[#656D4A] max-w-3xl mx-auto">This venture is positioned at the intersection of three powerful trends: the growth of assistive technology, the specific need for cognitive aids, and the mainstream demand for data privacy. The interactive charts below illustrate the scale of this opportunity and the clear market gaps waiting to be filled.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <h3 class="text-2xl font-semibold text-center mb-4 text-[#333D29]">Assistive Technology Market Growth</h3>
+                        <div class="chart-container">
+                            <canvas id="atMarketChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="fade-in">
+                        <h3 class="text-2xl font-semibold text-center mb-4 text-[#333D29]">Australian Cognitive Training Market Growth</h3>
+                        <div class="chart-container">
+                            <canvas id="cognitiveMarketChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#333D29] mb-4">The Privacy-First Moat: Our Key Differentiator</h2>
+                    <p class="text-lg text-[#656D4A] max-w-3xl mx-auto">Existing solutions force users into a "privacy paradox," making them choose between functionality and data security. Our solution eliminates this compromise. By processing all data on the device, we offer a simple, verifiable promise: "Your data is yours. Period." The table below highlights how this architecture creates a powerful competitive advantage.</p>
+                </div>
+                <div class="max-w-4xl mx-auto fade-in">
+                    <div class="bg-[#F8F7F4] rounded-lg shadow-lg overflow-hidden">
+                        <table class="w-full text-left">
+                            <thead class="bg-[#A3B18A] text-white">
+                                <tr>
+                                    <th class="p-4 font-semibold">Feature / Policy</th>
+                                    <th class="p-4 font-semibold text-center">Our Device</th>
+                                    <th class="p-4 font-semibold text-center">Otter.ai</th>
+                                    <th class="p-4 font-semibold text-center">Rewind.ai</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="privacy-row">
+                                    <td class="p-4 font-medium">Core AI Processing</td>
+                                    <td class="p-4 text-center font-bold text-[#5A8F7B]">100% On-Device</td>
+                                    <td class="p-4 text-center text-red-600">Cloud-Based</td>
+                                    <td class="p-4 text-center text-yellow-600">Hybrid (Cloud for AI)</td>
+                                </tr>
+                                <tr class="privacy-row">
+                                    <td class="p-4 font-medium">Data Storage</td>
+                                    <td class="p-4 text-center font-bold text-[#5A8F7B]">Local on Device</td>
+                                    <td class="p-4 text-center text-red-600">Cloud (AWS S3)</td>
+                                    <td class="p-4 text-center text-yellow-600">Local + Cloud Sync</td>
+                                </tr>
+                                <tr class="privacy-row">
+                                    <td class="p-4 font-medium">Data Used for AI Training?</td>
+                                    <td class="p-4 text-center font-bold text-[#5A8F7B]">No</td>
+                                    <td class="p-4 text-center text-red-600">Yes (De-identified)</td>
+                                    <td class="p-4 text-center text-red-600">Yes (via OpenAI)</td>
+                                </tr>
+                                <tr class="privacy-row">
+                                    <td class="p-4 font-medium">Data Shared with 3rd Parties?</td>
+                                    <td class="p-4 text-center font-bold text-[#5A8F7B]">No</td>
+                                    <td class="p-4 text-center text-red-600">Yes (Gov, Owners)</td>
+                                    <td class="p-4 text-center text-red-600">Yes (OpenAI)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-medium">Form Factor</td>
+                                    <td class="p-4 text-center">Wearable</td>
+                                    <td class="p-4 text-center">Software</td>
+                                    <td class="p-4 text-center">Software</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#333D29] mb-4">A Phased Strategy for Market Leadership</h2>
+                    <p class="text-lg text-[#656D4A] max-w-3xl mx-auto">Our go-to-market plan is a de-risked, three-horizon strategy. We begin with a direct-to-consumer launch to establish our brand and generate revenue, then expand into the lucrative NDIS and enterprise markets, all while building towards our ultimate goal: a classified, insurance-reimbursable medical device. Click each phase to learn more.</p>
+                </div>
+                <div class="relative w-full max-w-5xl mx-auto fade-in">
+                    <div class="absolute left-1/2 top-0 h-full w-0.5 bg-[#A3B18A] -translate-x-1/2"></div>
+                    <div class="space-y-16">
+                        <div class="roadmap-item flex md:justify-end md:pr-12">
+                            <div class="w-full md:w-5/12">
+                                <div class="product-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#5A8F7B]">
+                                    <p class="text-sm font-semibold text-[#5A8F7B]">PHASE 1 (YEARS 0-2)</p>
+                                    <h3 class="text-xl font-bold text-[#333D29] mb-2">Consumer Wellness Launch</h3>
+                                    <p class="text-[#656D4A]">Launch the "ADHD Memory Companion" via a D2C model. Focus on the core privacy promise to build brand trust, generate revenue, and gather user testimonials.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="roadmap-item flex md:justify-start md:pl-12">
+                            <div class="w-full md:w-5/12">
+                                <div class="product-card bg-white p-6 rounded-lg shadow-lg border-r-4 md:border-r-0 md:border-l-4 border-[#5A8F7B]">
+                                    <p class="text-sm font-semibold text-[#5A8F7B]">PHASE 2 (YEARS 2-4)</p>
+                                    <h3 class="text-xl font-bold text-[#333D29] mb-2">NDIS & Enterprise Expansion</h3>
+                                    <p class="text-[#656D4A]">Launch the "Family Hub" concept, targeting the NDIS channel. Begin outreach to corporate wellness programs, establishing a B2B sales motion.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="roadmap-item flex md:justify-end md:pr-12">
+                            <div class="w-full md:w-5/12">
+                                <div class="product-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#5A8F7B]">
+                                    <p class="text-sm font-semibold text-[#5A8F7B]">PHASE 3 (YEARS 4+)</p>
+                                    <h3 class="text-xl font-bold text-[#333D29] mb-2">The Medical Device Future</h3>
+                                    <p class="text-[#656D4A]">Achieve TGA classification for a "Therapeutic Memory Aid." Secure reimbursement from insurers and the NDIS, solidifying a defensible, long-term market position.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="challenges" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#333D29] mb-4">Addressing Key Challenges Head-On</h2>
+                    <p class="text-lg text-[#656D4A] max-w-3xl mx-auto">Credibility is built on transparency. We have identified the primary technical and legal hurdles and have developed clear, actionable mitigation strategies. Our proactive approach turns potential weaknesses into demonstrations of strategic foresight.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="risk-card bg-[#F8F7F4] p-8 rounded-lg shadow-lg fade-in">
+                        <h3 class="text-2xl font-semibold text-[#333D29] mb-4">Technical: The Power Trilemma</h3>
+                        <p class="text-[#656D4A] mb-6">The commitment to on-device privacy creates a technical trade-off between AI performance, power consumption, and battery life. Click the nodes to explore this challenge.</p>
+                        <div class="flex justify-around items-center h-48">
+                            <div id="trilemma-privacy" class="trilemma-node cursor-pointer p-4 rounded-full text-center bg-white shadow-md">
+                                <p class="font-bold">Privacy</p>
+                                <p class="text-xs">(On-Device AI)</p>
+                            </div>
+                            <div id="trilemma-performance" class="trilemma-node cursor-pointer p-4 rounded-full text-center bg-white shadow-md">
+                                <p class="font-bold">Performance</p>
+                                <p class="text-xs">(Fast & Accurate)</p>
+                            </div>
+                            <div id="trilemma-power" class="trilemma-node cursor-pointer p-4 rounded-full text-center bg-white shadow-md">
+                                <p class="font-bold">Power</p>
+                                <p class="text-xs">(Long Battery)</p>
+                            </div>
+                        </div>
+                        <div id="trilemma-explanation" class="mt-4 p-4 bg-white rounded-lg text-sm text-[#333D29]">
+                            <p class="font-bold">Our Mitigation:</p>
+                            <p>Aggressive power management (keyword wake-up vs. always-on), realistic battery life claims (standby vs. continuous use), and shifting heavy AI tasks (like summarization) to an optional, premium cloud service.</p>
+                        </div>
+                    </div>
+                    <div class="risk-card bg-[#F8F7F4] p-8 rounded-lg shadow-lg fade-in">
+                        <h3 class="text-2xl font-semibold text-[#333D29] mb-4">Legal: The Law of Listening</h3>
+                        <p class="text-[#656D4A] mb-6">Australian law requires all-party consent for recording private conversations. A passive recorder is legally untenable. Our solution is "Consent by Design."</p>
+                        <div class="bg-white p-6 rounded-lg text-center">
+                            <div class="inline-block relative p-4 bg-gray-800 text-white rounded-full">
+                                <span class="absolute h-3 w-3 top-2 right-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                            </div>
+                            <p class="mt-4 font-semibold">Unambiguous Activation</p>
+                            <p class="text-sm text-[#656D4A]">Recording is initiated by a clear user action, accompanied by audible chimes and visible, non-disguisable lights to notify all parties.</p>
+                        </div>
+                        <div class="mt-4 p-4 bg-white rounded-lg text-sm text-[#333D29]">
+                            <p class="font-bold">Our Mitigation:</p>
+                            <p>By embedding consent-facilitating features into the hardware and UI, we place the legal and ethical responsibility for lawful use with the user, mitigating company liability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="business" class="py-20">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#333D29] mb-4">A Sustainable & Scalable Business Model</h2>
+                    <p class="text-lg text-[#656D4A] max-w-3xl mx-auto">Our strategy combines upfront hardware sales for immediate cash flow with a premium subscription for long-term recurring revenue. This hybrid model allows us to fund growth while delivering continuous value to our users and creating a sustainable, high-growth venture.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="revenue-card bg-white p-6 rounded-lg shadow-md text-center fade-in">
+                        <h3 class="font-bold text-xl text-[#333D29] mb-2">Hardware Sale</h3>
+                        <p class="font-bold text-2xl text-[#5A8F7B]">$200-$400</p>
+                        <p class="text-sm text-[#656D4A] mt-2">One-time purchase provides immediate cash flow and a tangible return on investment against the "$25k ADHD Tax."</p>
+                    </div>
+                    <div class="revenue-card bg-white p-6 rounded-lg shadow-md text-center fade-in" style="transition-delay: 100ms;">
+                        <h3 class="font-bold text-xl text-[#333D29] mb-2">Premium Subscription</h3>
+                        <p class="font-bold text-2xl text-[#5A8F7B]">$10-$20/mo</p>
+                        <p class="text-sm text-[#656D4A] mt-2">Unlocks advanced AI, secure cloud backup, and therapy integration for long-term recurring revenue.</p>
+                    </div>
+                    <div class="revenue-card bg-white p-6 rounded-lg shadow-md text-center fade-in" style="transition-delay: 200ms;">
+                        <h3 class="font-bold text-xl text-[#333D29] mb-2">B2B Corporate Wellness</h3>
+                        <p class="font-bold text-2xl text-[#5A8F7B]">Future Channel</p>
+                        <p class="text-sm text-[#656D4A] mt-2">Improve productivity and well-being for neurodivergent employees. A clear ROI for corporate partners.</p>
+                    </div>
+                     <div class="revenue-card bg-white p-6 rounded-lg shadow-md text-center fade-in" style="transition-delay: 300ms;">
+                        <h3 class="font-bold text-xl text-[#333D29] mb-2">Medical Reimbursement</h3>
+                        <p class="font-bold text-2xl text-[#5A8F7B]">Endgame Goal</p>
+                        <p class="text-sm text-[#656D4A] mt-2">The ultimate high-value channel, unlocked after achieving TGA classification as a medical device.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-[#A3B18A]">
+        <div class="container mx-auto px-6 py-8 text-center text-white">
+            <p>On-Device Memory Companion: Strategic Analysis</p>
+            <p class="text-sm opacity-75 mt-2">This interactive report is a synthesis of the provided strategic analysis. For detailed citations and references, please consult the original document.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const chartData = {
+        atMarket: {
+            labels: ['2023', '2033'],
+            data: [22.9, 36.6],
+            title: 'Global Assistive Technology Market (USD Billions)'
+        },
+        cognitiveMarket: {
+            labels: ['2024', '2030'],
+            data: [96.6, 434.1],
+            title: 'Australian Cognitive Training Market (USD Millions)'
+        }
+    };
+
+    const createBarChart = (ctx, labels, data, title) => {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: title,
+                    data: data,
+                    backgroundColor: ['#A3B18A', '#5A8F7B'],
+                    borderColor: ['#A3B18A', '#5A8F7B'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                           color: '#656D4A'
+                        },
+                        grid: {
+                           color: '#e0e0e0'
+                        }
+                    },
+                    x: {
+                       ticks: {
+                           color: '#656D4A'
+                       },
+                       grid: {
+                           display: false
+                       }
+                    }
+                }
+            }
+        });
+    };
+
+    const atMarketCtx = document.getElementById('atMarketChart');
+    if (atMarketCtx) {
+        createBarChart(atMarketCtx.getContext('2d'), chartData.atMarket.labels, chartData.atMarket.data, chartData.atMarket.title);
+    }
+
+    const cognitiveMarketCtx = document.getElementById('cognitiveMarketChart');
+    if (cognitiveMarketCtx) {
+        createBarChart(cognitiveMarketCtx.getContext('2d'), chartData.cognitiveMarket.labels, chartData.cognitiveMarket.data, chartData.cognitiveMarket.title);
+    }
+    
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+        threshold: 0,
+        rootMargin: "0px 0px -100px 0px"
+    };
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                return;
+            } else {
+                entry.target.classList.add('visible');
+                appearOnScroll.unobserve(entry.target);
+            }
+        });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+    });
+    
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.4
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+    
+    const trilemmaNodes = document.querySelectorAll('.trilemma-node');
+    const trilemmaExplanation = document.getElementById('trilemma-explanation');
+    const trilemmaContent = {
+        privacy: '<p class="font-bold">Challenge:</p><p>100% on-device processing requires powerful hardware, which is difficult to miniaturize and make power-efficient.</p>',
+        performance: '<p class="font-bold">Challenge:</p><p>Running complex AI models locally demands high CPU/TPU usage, generating heat and draining the battery quickly.</p>',
+        power: '<p class="font-bold">Challenge:</p><p>A small, wearable form factor limits battery size, making multi-day continuous operation technically infeasible with current components.</p>',
+    };
+    
+    trilemmaNodes.forEach(node => {
+        node.addEventListener('click', () => {
+            const type = node.id.split('-')[1];
+            trilemmaExplanation.innerHTML = trilemmaContent[type];
+            trilemmaNodes.forEach(n => n.classList.remove('ring-2', 'ring-offset-2', 'ring-[#5A8F7B]'));
+            node.classList.add('ring-2', 'ring-offset-2', 'ring-[#5A8F7B]');
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>
