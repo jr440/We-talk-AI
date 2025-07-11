@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Bridge Solutions - Your Problems, AI Solutions, Human Touch</title>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      
+      body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          line-height: 1.6;
+          color: #333;
+      }
+      
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+      }
+      
+      header {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 2rem 0;
+          text-align: center;
+      }
+      
+      .hero h1 {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+          font-weight: 700;
+      }
+      
+      .hero p {
+          font-size: 1.3rem;
+          margin-bottom: 2rem;
+          opacity: 0.9;
+      }
+      
+      .cta-button {
+          display: inline-block;
+          background: #ff6b6b;
+          color: white;
+          padding: 15px 30px;
+          text-decoration: none;
+          border-radius: 50px;
+          font-weight: bold;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+      }
+      
+      .cta-button:hover {
+          background: #ff5252;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+      }
+      
+      .problem-section {
+          background: #f8f9fa;
+          padding: 4rem 0;
+      }
+      
+      .story-box {
+          background: white;
+          padding: 2rem;
+          border-radius: 15px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          margin: 2rem 0;
+          border-left: 5px solid #667eea;
+      }
+      
+      .story-box h3 {
+          color: #667eea;
+          margin-bottom: 1rem;
+          font-size: 1.5rem;
+      }
+      
+      .services {
+          padding: 4rem 0;
+      }
+      
+      .services-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
+      }
+      
+      .service-card {
+          background: white;
+          padding: 2rem;
+          border-radius: 15px;
+          box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+          transition: transform 0.3s ease;
+          border-top: 4px solid #667eea;
+      }
+      
+      .service-card:hover {
+          transform: translateY(-5px);
+      }
+      
+      .service-card h3 {
+          color: #667eea;
+          margin-bottom: 1rem;
+      }
+      
+      .price {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #ff6b6b;
+          margin-top: 1rem;
+      }
+      
+      .testimonial {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 4rem 0;
+          text-align: center;
+      }
+      
+      .testimonial-box {
+          background: rgba(255,255,255,0.1);
+          padding: 2rem;
+          border-radius: 15px;
+          margin: 2rem auto;
+          max-width: 800px;
+          backdrop-filter: blur(10px);
+      }
+      
+      .contact {
+          padding: 4rem 0;
+          background: #f8f9fa;
+          text-align: center;
+      }
+      
+      .contact-form {
+          max-width: 600px;
+          margin: 2rem auto;
+          background: white;
+          padding: 2rem;
+          border-radius: 15px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+      
+      .form-group {
+          margin-bottom: 1.5rem;
+          text-align: left;
+      }
+      
+      .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: bold;
+          color: #333;
+      }
+      
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+          width: 100%;
+          padding: 12px;
+          border: 2px solid #e0e0e0;
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+      }
+      
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+          outline: none;
+          border-color: #667eea;
+      }
+      
+      .submit-btn {
+          background: #667eea;
+          color: white;
+          padding: 15px 30px;
+          border: none;
+          border-radius: 50px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+      }
+      
+      .submit-btn:hover {
+          background: #5a67d8;
+          transform: translateY(-2px);
+      }
+      
+      .section-title {
+          text-align: center;
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+          color: #333;
+      }
+      
+      .section-subtitle {
+          text-align: center;
+          font-size: 1.2rem;
+          color: #666;
+          margin-bottom: 3rem;
+      }
+      
+      @media (max-width: 768px) {
+          .hero h1 {
+              font-size: 2rem;
+          }
+          
+          .hero p {
+              font-size: 1.1rem;
+          }
+          
+          .services-grid {
+              grid-template-columns: 1fr;
+          }
+      }
+  </style>
+</head>
+<body>
+  <header>
+      <div class="container">
+          <div class="hero">
+              <h1>AI Bridge Solutions</h1>
+              <p>Your Problems + AI Solutions + Human Touch = Results</p>
+              <a href="#contact" class="cta-button">Get Help Now</a>
+          </div>
+      </div>
+  </header>
+
+  <section class="problem-section">
+      <div class="container">
+          <h2 class="section-title">Ever Been Here?</h2>
+          <p class="section-subtitle">You know AI could solve your problem... but you don't know how to ask it</p>
+          
+          <div class="story-box">
+              <h3>🎯 The PLE Story: From 45 Minutes to 5 Minutes</h3>
+              <p><strong>The Problem:</strong> Customer at PLE needed a Bluetooth dongle for DJ equipment. Had video of the gear, but no model number. Staff couldn't help without the exact model. 45+ minutes of frustration.</p>
+              
+              <p><strong>The Solution:</strong> I stepped in: "Have you tried AI?" Used Google Pixel AI to analyze the video. Result: Pioneer DJ XDJ-RR identified in under 5 minutes. Customer got exactly what he needed.</p>
+              
+              <p><strong>The Lightbulb Moment:</strong> "What if I was the bridge between your problem and AI's solution?"</p>
+          </div>
+      </div>
+  </section>
+
+  <section class="services">
+      <div class="container">
+          <h2 class="section-title">How I Help</h2>
+          <p class="section-subtitle">I speak both Human and AI - so you don't have to learn</p>
+          
+          <div class="services-grid">
+              <div class="service-card">
+                  <h3>🔍 Problem Identification</h3>
+                  <p>Got a mystery device? Unknown part? Technical question? I'll use AI to identify, research, and solve it for you.</p>
+                  <p><strong>Perfect for:</strong> Equipment ID, compatibility checks, troubleshooting</p>
+                  <div class="price">$50-150 per session</div>
+              </div>
+              
+              <div class="service-card">
+                  <h3>📊 Research & Analysis</h3>
+                  <p>Need deep research on products, markets, or technical specs? I'll use multiple AI tools to get you comprehensive answers.</p>
+                  <p><strong>Perfect for:</strong> Buying decisions, competitive analysis, technical research</p>
+                  <div class="price">$200-500 per project</div>
+              </div>
+              
+              <div class="service-card">
+                  <h3>🛠️ Digital Problem Solving</h3>
+                  <p>Technology acting up? Software issues? I'll diagnose and solve using AI-powered troubleshooting.</p>
+                  <p><strong>Perfect for:</strong> Tech support, setup help, compatibility issues</p>
+                  <div class="price">$75-200 per session</div>
+              </div>
+              
+              <div class="service-card">
+                  <h3>🏢 Business AI Consulting</h3>
+                  <p>Want AI to help your business but don't know where to start? I'll show you what's possible and help implement it.</p>
+                  <p><strong>Perfect for:</strong> Small businesses, process improvement, customer service</p>
+                  <div class="price">$1,000-5,000 per project</div>
+              </div>
+              
+              <div class="service-card">
+                  <h3>🎓 AI Training</h3>
+                  <p>Want to learn AI yourself? I'll teach you the basics in plain English, no tech background needed.</p>
+                  <p><strong>Perfect for:</strong> Individuals, teams, workshops</p>
+                  <div class="price">$100-300 per person</div>
+              </div>
+              
+              <div class="service-card">
+                  <h3>🔄 Ongoing Support</h3>
+                  <p>Regular AI assistance on tap. Monthly sessions plus priority support when problems arise.</p>
+                  <p><strong>Perfect for:</strong> Busy professionals, small business owners</p>
+                  <div class="price">$300-800 per month</div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="testimonial">
+      <div class="container">
+          <h2>Why This Works</h2>
+          <div class="testimonial-box">
+              <p><em>"I understand technology anxiety because I've been there. I know what it's like to have a problem and not know where to start. That's why I don't just solve your problem - I make sure you feel comfortable with the process."</em></p>
+              <p><strong>- Jesse, AI Bridge Solutions</strong></p>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem;">
+              <div>
+                  <h3>🧠 AI Expert</h3>
+                  <p>I love working with AI and know how to get results</p>
+              </div>
+              <div>
+                  <h3>🤝 Human Translator</h3>
+                  <p>I speak both Human and AI fluently</p>
+              </div>
+              <div>
+                  <h3>⚡ Proven Results</h3>
+                  <p>Real-world success stories, not just theory</p>
+              </div>
+              <div>
+                  <h3>💝 Genuine Care</h3>
+                  <p>I actually want to help, not just make money</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="contact" id="contact">
+      <div class="container">
+          <h2 class="section-title">Ready to Bridge the Gap?</h2>
+          <p class="section-subtitle">Tell me about your problem - I'll figure out how AI can solve it</p>
+          
+          <div class="contact-form">
+              <form>
+                  <div class="form-group">
+                      <label for="name">Your Name</label>
+                      <input type="text" id="name" name="name" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" id="email" name="email" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="phone">Phone (optional)</label>
+                      <input type="tel" id="phone" name="phone">
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="service">What kind of help do you need?</label>
+                      <select id="service" name="service" required>
+                          <option value="">Select a service...</option>
+                          <option value="identification">Problem/Equipment Identification</option>
+                          <option value="research">Research & Analysis</option>
+                          <option value="troubleshooting">Digital Problem Solving</option>
+                          <option value="business">Business AI Consulting</option>
+                          <option value="training">AI Training</option>
+                          <option value="ongoing">Ongoing Support</option>
+                          <option value="other">Not sure - let's talk</option>
+                      </select>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="problem">Describe your problem or challenge</label>
+                      <textarea id="problem" name="problem" rows="4" placeholder="The more details you give me, the better I can help..." required></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="timeline">When do you need this solved?</label>
+                      <select id="timeline" name="timeline">
+                          <option value="urgent">ASAP - it's urgent</option>
+                          <option value="week">Within a week</option>
+                          <option value="month">Within a month</option>
+                          <option value="flexible">I'm flexible</option>
+                      </select>
+                  </div>
+                  
+                  <button type="submit" class="submit-btn">Get My AI Solution</button>
+              </form>
+              
+              <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee;">
+                  <p><strong>Prefer to talk?</strong></p>
+                  <p>📧 Email: jesse@aibridgesolutions.com</p>
+                  <p>📱 Text/Call: [Your Phone Number]</p>
+                  <p>⚡ Response time: Usually within 2 hours</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <footer style="background: #333; color: white; text-align: center; padding: 2rem 0;">
+      <div class="container">
+          <p>&copy; 2025 AI Bridge Solutions. Making AI accessible, one problem at a time.</p>
+          <p style="margin-top: 1rem; opacity: 0.7;">Perth, Western Australia | Serving locally and online</p>
+      </div>
+  </footer>
+
+  <script>
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              document.querySelector(this.getAttribute('href')).scrollIntoView({
+                  behavior: 'smooth'
+              });
+          });
+      });
+
+      // Form submission (you'll need to connect this to your actual form handler)
+      document.querySelector('form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Thanks for your interest! I\'ll get back to you within 2 hours. For urgent matters, please call or text directly.');
+          // Here you would normally send the form data to your server
+      });
+  </script>
+</body>
+</html>
