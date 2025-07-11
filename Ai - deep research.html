@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Untapped Intersection: An Interactive Market Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Calm Neutral" (slate-50 background, slate-800 text, sky-600 accent) -->
+    <!-- Application Structure Plan: A narrative, single-page scrolling application. The structure is designed to tell a story, guiding the user from the large-scale market opportunity (The AI Gold Rush) down to the core problem (The Trust Deficit), and finally presenting the unique solution (Systematic Empathy). This narrative flow is more persuasive and easier to digest than a disconnected dashboard. It builds context layer by layer, making the final strategic recommendation feel logical and inevitable. Key interactions involve revealing data on hover/click to keep the initial view clean and focused, encouraging exploration. -->
+    <!-- Visualization & Content Choices: Data from the report is translated into interactive visualizations to achieve specific goals. 1) Market Size (Goal: Impress) -> Bar chart to compare forecasts. 2) The Adoption Gap (Goal: Show Conflict) -> Donut & Bar charts to highlight the contrast between potential and reality. 3) Target Personas (Goal: Build Empathy) -> Interactive cards to humanize the data. 4) Competitive Landscape (Goal: Position) -> A visual matrix built with HTML/CSS to clearly show the "missing middle." 5) Solution (Goal: Clarify) -> A 3-step process diagram (HTML/CSS) to explain the "Systematic Empathy" model simply. All choices use Chart.js (Canvas) or styled HTML/CSS, adhering to the NO SVG/Mermaid constraint. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+         .nav-link:hover, .nav-link.active {
+            color: #0284c7; /* sky-600 */
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 lg:px-6">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="text-xl font-bold text-slate-900">Technology, <span class="text-sky-600">Translated.</span></a>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-medium text-slate-600">
+                    <a href="#opportunity" class="nav-link">The Opportunity</a>
+                    <a href="#problem" class="nav-link">The Problem</a>
+                    <a href="#solution" class="nav-link">The Solution</a>
+                    <a href="#strategy" class="nav-link">The Strategy</a>
+                </div>
+                <a href="#strategy" class="hidden md:inline-block bg-sky-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-sky-700 transition">View The Plan</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 md:py-32 text-center bg-white">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900">The Untapped Intersection</h1>
+                <p class="mt-6 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">A market analysis of the significant opportunity for neurodiverse-led AI consulting in Australia.</p>
+                <div class="mt-8 flex justify-center gap-4">
+                    <a href="#opportunity" class="bg-sky-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-sky-700 transition">Explore the Data</a>
+                    <a href="#solution" class="bg-white text-slate-700 font-semibold px-6 py-3 rounded-lg hover:bg-slate-100 transition ring-1 ring-slate-200">Discover the Solution</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="opportunity" class="py-16 md:py-24 bg-slate-50 section-fade-in">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">The Australian AI Gold Rush</h2>
+                    <p class="mt-4 text-slate-600">The Australian AI market is in a state of hyper-growth, creating a powerful tailwind for any new venture. The demand for expertise is growing even faster than the demand for AI products themselves, signalling a clear need for guidance and consulting.</p>
+                </div>
+                <div class="mt-12">
+                    <div class="chart-container">
+                        <canvas id="marketForecastChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-slate-500 mt-4">Hover over the bars to see detailed growth projections.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="py-16 md:py-24 bg-white section-fade-in">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto">
+                    <p class="font-semibold text-sky-600">The Problem</p>
+                    <h2 class="mt-2 text-3xl md:text-4xl font-bold text-slate-900">A Market Divided: The Trust Deficit</h2>
+                    <p class="mt-4 text-slate-600">Despite massive market growth, a deep chasm separates technology from its potential users. Millions of SMEs and older Australians are being left behind, not due to a lack of interest, but a rational lack of trust and confidence. This is the opportunity.</p>
+                </div>
+                <div class="mt-12 grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
+                    <div class="stat-card">
+                        <h3 class="text-xl font-semibold text-slate-800">The SME Adoption Paradox</h3>
+                        <p class="text-slate-500 mt-2 text-sm">A significant portion of small and medium businesses are not just slow to adopt AI—they're actively disengaged due to fear and uncertainty.</p>
+                        <div class="mt-6 h-64">
+                            <canvas id="smeAdoptionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3 class="text-xl font-semibold text-slate-800">The Geographic & Skills Divide</h3>
+                        <p class="text-slate-500 mt-2 text-sm">The adoption gap widens dramatically outside metro areas, while skill shortages and poor ROI on tech investments plague businesses nationwide.</p>
+                         <div class="mt-6 h-64">
+                            <canvas id="geoDivideChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-16 text-center max-w-3xl mx-auto section-fade-in">
+                    <h3 class="text-2xl font-bold text-slate-900">Who Are We Serving?</h3>
+                    <p class="mt-3 text-slate-600">The target market isn't anti-technology. They are pragmatic, risk-averse people seeking a trusted guide to translate complexity into safe, tangible outcomes.</p>
+                </div>
+                <div class="mt-8 grid md:grid-cols-2 gap-8">
+                     <div class="bg-white p-6 rounded-lg border border-slate-200">
+                        <h4 class="font-bold text-lg text-slate-800">The Overwhelmed SME Owner</h4>
+                        <p class="text-slate-600 mt-2">Pragmatic and time-poor, they need a partner who speaks in outcomes, not jargon. They seek certainty that an investment will directly improve productivity, not create more problems.</p>
+                        <ul class="mt-4 space-y-2 text-sm">
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">&#10007;</span> 42% doubt AI will increase revenue.</li>
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">&#10007;</span> Top barriers: lack of knowledge & ROI uncertainty.</li>
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">&#10007;</span> Need a business partner, not a technologist.</li>
+                        </ul>
+                     </div>
+                     <div class="bg-white p-6 rounded-lg border border-slate-200">
+                        <h4 class="font-bold text-lg text-slate-800">The Cautious Older Australian</h4>
+                        <p class="text-slate-600 mt-2">Digitally active but deeply concerned about safety and privacy. They need patient, clear guidance to use technology safely for its primary benefit: connection.</p>
+                        <ul class="mt-4 space-y-2 text-sm">
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">&#10007;</span> 80% are concerned about personal data security.</li>
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">&#10007;</span> Only 10% feel "very confident" staying safe online.</li>
+                             <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">&#10003;</span> 84% are willing to adopt new technology with proper guidance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-16 md:py-24 bg-slate-50 section-fade-in">
+            <div class="container mx-auto px-4">
+                 <div class="text-center max-w-3xl mx-auto">
+                    <p class="font-semibold text-sky-600">The Solution</p>
+                    <h2 class="mt-2 text-3xl md:text-4xl font-bold text-slate-900">Systematic Empathy: Thinking as a Service</h2>
+                    <p class="mt-4 text-slate-600">Our core competitive advantage is not just what we do, but how we think. We leverage the innate cognitive strengths of neurodiverse consultants (ASD) as a strategic asset for superior service delivery.</p>
+                </div>
+
+                <div class="mt-12 grid md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="section-fade-in">
+                        <h3 class="text-xl font-semibold">A Strategic Advantage, Not Charity</h3>
+                        <p class="mt-2 text-slate-600">Neurodiverse individuals can be up to 140% more productive in tech roles. We harness these strengths—superior pattern recognition, logic, and attention to detail—to build more robust and effective solutions.</p>
+                        <p class="mt-4 text-sm font-semibold text-slate-800 p-4 bg-sky-100 border-l-4 border-sky-500 rounded-r-lg">"Our consultants are chosen because the unique way their minds work allows them to see patterns, identify risks, and build logical systems that others miss."</p>
+                    </div>
+
+                    <div class="section-fade-in">
+                        <h3 class="text-xl font-semibold">The "Systematic Empathy" Model</h3>
+                        <p class="mt-2 text-slate-600">We build trust not through social reassurance, but through impeccable logic. Our proprietary 3-step process turns a client's chaos into a clear, predictable, and safe plan.</p>
+                        <div class="mt-4 space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-sky-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
+                                <div class="ml-4">
+                                    <h4 class="font-semibold">Structured Deconstruction</h4>
+                                    <p class="text-sm text-slate-500">Break down a vague problem into a logical, step-by-step process flow.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-sky-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
+                                <div class="ml-4">
+                                    <h4 class="font-semibold">Jargon-Free Translation</h4>
+                                    <p class="text-sm text-slate-500">Use approved analogies and benefit-focused statements, never technical jargon.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-sky-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
+                                <div class="ml-4">
+                                    <h4 class="font-semibold">Visual, Process-Based Roadmaps</h4>
+                                    <p class="text-sm text-slate-500">Deliver a simple flowchart showing the 'if-then' logic of the solution.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="py-16 md:py-24 bg-white section-fade-in">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto">
+                    <p class="font-semibold text-sky-600">The Strategy</p>
+                    <h2 class="mt-2 text-3xl md:text-4xl font-bold text-slate-900">A Roadmap for Market Entry & Growth</h2>
+                    <p class="mt-4 text-slate-600">Our plan is a deliberate, phased approach focusing on high-value services, trust-based marketing, and strategic scaling to capture the "missing middle" of the market.</p>
+                </div>
+
+                 <div class="mt-12">
+                    <div id="tabs" class="mb-8 flex justify-center border-b border-slate-200">
+                        <button data-tab="sme" class="tab-button active-tab py-2 px-6 text-sm font-medium border-b-2 border-sky-600 text-sky-600">For SMEs</button>
+                        <button data-tab="individual" class="tab-button py-2 px-6 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-sky-600 hover:border-slate-300">For Individuals</button>
+                    </div>
+
+                    <div id="sme-content" class="tab-content grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="stat-card p-4">
+                            <h4 class="font-semibold">The 5-Hour AI Kickstart</h4>
+                            <p class="text-sm text-slate-500 mt-1">A fixed-fee diagnostic to identify top efficiency gains and deliver a visual roadmap.</p>
+                        </div>
+                         <div class="stat-card p-4">
+                            <h4 class="font-semibold">The Automated Inbox</h4>
+                            <p class="text-sm text-slate-500 mt-1">Implement AI tools to save administrative hours via email sorting and response generation.</p>
+                        </div>
+                         <div class="stat-card p-4">
+                            <h4 class="font-semibold">The Marketing Autopilot</h4>
+                            <p class="text-sm text-slate-500 mt-1">Set up AI-powered tools for social media content, scheduling, and ad management.</p>
+                        </div>
+                         <div class="stat-card p-4">
+                            <h4 class="font-semibold">The Cybersecurity Shield</h4>
+                            <p class="text-sm text-slate-500 mt-1">Deploy AI-driven security protocols and provide staff training on threat identification.</p>
+                        </div>
+                    </div>
+
+                    <div id="individual-content" class="tab-content hidden grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                         <div class="stat-card p-4">
+                            <h4 class="font-semibold">The Secure Senior</h4>
+                            <p class="text-sm text-slate-500 mt-1">Harden all devices, install a password manager, and train on spotting online scams.</p>
+                        </div>
+                         <div class="stat-card p-4">
+                            <h4 class="font-semibold">The Connected Grandparent</h4>
+                            <p class="text-sm text-slate-500 mt-1">Simplify smart devices and video calling apps for easy and safe family connection.</p>
+                        </div>
+                         <div class="stat-card p-4">
+                            <h4 class="font-semibold">My Digital Legacy</h4>
+                            <p class="text-sm text-slate-500 mt-1">A structured process to organize digital assets and create a clear management plan.</p>
+                        </div>
+                    </div>
+                 </div>
+
+                 <div class="mt-16 text-center max-w-3xl mx-auto section-fade-in">
+                    <h3 class="text-2xl font-bold text-slate-900">Occupying the "Missing Middle"</h3>
+                    <p class="mt-3 text-slate-600">The market is split between complex enterprise consultants and basic break-fix support. We create a new category: strategic, accessible, value-based AI translation.</p>
+                </div>
+                <div class="mt-8 max-w-4xl mx-auto p-4 bg-slate-50 rounded-lg">
+                    <div class="grid grid-cols-3 text-center text-sm font-semibold">
+                        <div class="p-2">High-End Enterprise AI</div>
+                        <div class="p-2 text-sky-600 font-bold border-2 border-sky-500 rounded-lg bg-sky-50">THE MISSING MIDDLE</div>
+                        <div class="p-2">Low-End Tech Support</div>
+                    </div>
+                     <div class="grid grid-cols-3 mt-2">
+                        <div class="p-4 border-r border-slate-200">
+                             <ul class="space-y-2 text-xs text-slate-600">
+                                <li><strong>Target:</strong> ASX 200, Gov't</li>
+                                <li><strong>Scope:</strong> Custom AI models</li>
+                                <li><strong>Style:</strong> Jargon-heavy</li>
+                                <li><strong>Price:</strong> High-cost retainers</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 border-r border-slate-200 bg-sky-50">
+                            <ul class="space-y-2 text-xs text-slate-700 font-medium">
+                                <li><strong>Target:</strong> Tech-intimidated SMEs, Seniors</li>
+                                <li><strong>Scope:</strong> Workflow Automation, Security</li>
+                                <li><strong>Style:</strong> Systematic, Jargon-free</li>
+                                <li><strong>Price:</strong> Value-based packages</li>
+                            </ul>
+                        </div>
+                        <div class="p-4">
+                            <ul class="space-y-2 text-xs text-slate-600">
+                                <li><strong>Target:</strong> Consumers, Sole Traders</li>
+                                <li><strong>Scope:</strong> Break-fix, setup</li>
+                                <li><strong>Style:</strong> Patient, friendly</li>
+                                <li><strong>Price:</strong> Hourly rates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300">
+        <div class="container mx-auto px-4 py-8 text-center text-sm">
+            <p>&copy; 2025 AI Bridge Solutions (Concept). All rights reserved.</p>
+            <p class="mt-2 text-slate-400">This interactive report was generated based on the "Untapped Intersection" market analysis. For investment inquiries, please reach out.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const reportData = {
+                marketForecasts: {
+                    labels: ['IMARC Group (Total)', 'Grand View (Total)', 'IMARC Group (AIaaS)'],
+                    base2024: [2072.7, 2934.8, 416.2],
+                    forecastValue: [7761.0, 46380.3, 4474.7],
+                    cagr: [15.17, 48.3, 27.50]
+                },
+                smeAdoption: {
+                    labels: ['Adopting / Planning', 'Unaware How to Use', 'No Intention to Use'],
+                    data: [41, 21, 38]
+                },
+                geoDivide: {
+                    labels: ['NSW Metro', 'NSW Regional', 'WA Metro', 'WA Regional'],
+                    data: [34, 18, 32, 11]
+                }
+            };
+
+            const ctxMarket = document.getElementById('marketForecastChart').getContext('2d');
+            new Chart(ctxMarket, {
+                type: 'bar',
+                data: {
+                    labels: reportData.marketForecasts.labels,
+                    datasets: [{
+                        label: 'Forecast Value (USD Millions)',
+                        data: reportData.marketForecasts.forecastValue,
+                        backgroundColor: '#0ea5e9', // sky-500
+                        borderColor: '#0284c7', // sky-600
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Base Year Value (USD Millions)',
+                        data: reportData.marketForecasts.base2024,
+                        backgroundColor: '#a3a3a3', // neutral-400
+                        borderColor: '#737373', // neutral-500
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Australian AI Market Forecasts (to 2030/2033)',
+                            font: { size: 16, weight: '600' },
+                            color: '#1e293b' // slate-800
+                        },
+                        tooltip: {
+                            callbacks: {
+                                footer: function(tooltipItems) {
+                                    let index = tooltipItems[0].dataIndex;
+                                    return 'CAGR: ' + reportData.marketForecasts.cagr[index] + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'USD Millions'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ctxSme = document.getElementById('smeAdoptionChart').getContext('2d');
+            new Chart(ctxSme, {
+                type: 'doughnut',
+                data: {
+                    labels: reportData.smeAdoption.labels,
+                    datasets: [{
+                        label: '% of SMEs',
+                        data: reportData.smeAdoption.data,
+                        backgroundColor: ['#38bdf8', '#fbbf24', '#f87171'], // sky-400, amber-400, red-400
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'SME Stance on AI Adoption (Late 2024)',
+                            font: { size: 14, weight: '600' },
+                            color: '#1e293b'
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ctxGeo = document.getElementById('geoDivideChart').getContext('2d');
+            new Chart(ctxGeo, {
+                type: 'bar',
+                data: {
+                    labels: reportData.geoDivide.labels,
+                    datasets: [{
+                        label: '% AI Adoption',
+                        data: reportData.geoDivide.data,
+                        backgroundColor: ['#0ea5e9', '#60a5fa', '#0ea5e9', '#60a5fa'], // sky-500, blue-400
+                        borderColor: ['#0284c7', '#3b82f6', '#0284c7', '#3b82f6'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Metro vs. Regional AI Adoption Gap',
+                            font: { size: 14, weight: '600' },
+                            color: '#1e293b'
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                     scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '% Adoption Rate'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => {
+                        item.classList.remove('active-tab', 'border-sky-600', 'text-sky-600');
+                        item.classList.add('border-transparent', 'text-slate-500');
+                    });
+                    tab.classList.add('active-tab', 'border-sky-600', 'text-sky-600');
+                    tab.classList.remove('border-transparent', 'text-slate-500');
+
+                    const target = tab.dataset.tab;
+                    tabContents.forEach(content => {
+                        if (content.id === `${target}-content`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const faders = document.querySelectorAll('.section-fade-in');
+            const options = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            window.onscroll = () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+        });
+    </script>
+</body>
+</html>
